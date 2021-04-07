@@ -1,0 +1,178 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>ANNOUNCEMENT</title>
+  <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 11]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'%}"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="">
+  <meta name="author" content="Codedthemes" />
+  <!-- Favicon icon -->
+  <link rel="icon" href="{% static 'icon/lgutubodlogo.png'%}" type="image/x-icon">
+  <link rel="stylesheet" href="{% static 'premium/assets/sweetalert2/sweetalert2.min.css'%}">
+  <!-- vendor css -->
+  <link rel="stylesheet" href="{% static 'premium/assets/css/style.css'%}">
+
+  {% block 'link' %}
+
+  {% endblock %}
+  <style media="screen">
+    .topside {
+      height: 8vh;
+    }
+    .leftside, .rightside {
+      height: 87vh;
+    }
+    .footerside {
+      background: #b2bec3;
+      height: 5vh;
+      border-top: 1px solid #000;
+    }
+
+  </style>
+  <style>
+    #main_body {
+     background: url('{{ STATIC_URL }}static/logo/logo-tagana-an.jpeg') 50% 65% no-repeat fixed;
+    }
+  </style>
+
+</head>
+<body>
+  <div class="row bg-primary no-gutters">
+    <div class="col-md-6">
+      <div class="topside d-flex justify-content-start f-20 align-items-center text-white">
+        <b class="pl-2">MUNICIPALITY OF TAGANA-AN</b>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="topside d-flex justify-content-end align-items-center f-20 text-white">
+        <b id="time" class="pr-2"></b>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters" id="main_body">
+    <div class="col-md-8">
+      <div class="leftside no-gutters p-2">
+        <div class="card p-2 m-2" style="height:26vh;">
+          <div class="card-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+        <div class="card p-2 m-2" style="height:26vh;">
+          <div class="card-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+        <div class="card p-2 m-2" style="height:26vh;">
+          <div class="card-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="rightside no-gutters p-4">
+        <div class="card text-white bg-secondary ">
+          <div class="card-body">
+            <p class="card-text"><i class="feather icon-facebook bg-primary text-white mr-2"></i>https://www.facebook.com/</p>
+            <p class="card-text"><i class="feather icon-phone-call bg-danger text-white mr-2"></i>09090909090</p>
+          </div>
+        </div>
+        <div class="card text-white bg-secondary ">
+          <div class="card-header p-2 text-center border-bottom">
+            <h5 class="text-white">UPCOMING EVENTS</h5>
+          </div>
+          <div class="card-body border-bottom">
+
+          </div>
+          <div class="card-body border-bottom">
+
+          </div>
+          <div class="card-body border-bottom">
+
+          </div>
+          <div class="card-body border-bottom">
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row no-gutters">
+    <div class="col-md-12">
+      <div class="footerside no-gutters d-flex align-items-center f-20 text-danger">
+        <marquee>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</marquee>
+      </div>
+    </div>
+  </div>
+
+  <!-- Warning Section Ends -->
+
+  <!-- Required Js -->
+  <script src="{% static 'premium/assets/js/vendor-all.min.js'%}"></script>
+  <script src="{% static 'premium/assets/js/plugins/bootstrap.min.js'%}"></script>
+  <script src="{% static 'premium/assets/js/pcoded.min.js'%}"></script>
+
+  <!-- Apex Chart -->
+  <script src="{% static 'premium/assets/js/plugins/apexcharts.min.js'%}"></script>
+  <script src="{% static 'premium/assets/sweetalert2/sweetalert2.min.js'%}"></script>
+  <script src="{% static 'premium/assets/js/moment-with-locales.js'%}"></script>
+  <script type="text/javascript">
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  </script>
+  <script type="text/javascript">
+    var timeDisplay = document.getElementById("time");
+    function refreshTime() {
+    // var dateString = new Date().toLocaleString("en-US", {timeZone: "Asia/Singapore"});
+    // // var formattedString = dateString.replace(", ", " - ");
+    // // timeDisplay.innerHTML = formattedString;
+    var time = moment().format('MMMM D YYYY, h:mm:ss A');
+    timeDisplay.innerHTML = time.toUpperCase();
+    }
+
+    setInterval(refreshTime, 1000);
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    };
+  </script>
+
+  {% block 'script' %}
+  {% endblock %}
+
+  <!-- custom-chart js -->
+
+</body>
+
+</html>

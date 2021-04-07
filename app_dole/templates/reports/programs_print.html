@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+<head>
+    {% load static %}
+    <meta charset="utf-8">
+    <title>{{programs.description|upper}}</title>
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta charset="ISO-8859-1">
+    <link rel="icon" href="static/favicon.ico" type="image/x-icon">
+    <style type="text/css">
+        @page {
+            size: 8.5in 13in portrait;
+            margin-top: 1cm;
+            margin-left: 1cm;
+            margin-right: 1cm;
+            margin-bottom: 1cm;
+
+            @frame footer {
+            -pdf-frame-content: footer;
+            border-color: #fff;
+            left: 29pt; width: 555pt; top: 909; height: 15pt;
+            }
+        }
+
+        .font8 {
+          font-family: "Arial";
+          font-size: 11px;
+        }
+
+    </style>
+
+</head>
+<body>
+
+<div class="container">
+  <div id="footer" class="font8" style="text-align:center;opacity:0.5;">
+    <td colspan="12" style="padding: 3px; padding-top:2px;"><i style="font-size:10px;">Page <pdf:pagenumber> of <u><pdf:pagecount></u></i></td>
+  </div>
+  <div class="font8">
+    <table style="text-align:center;">
+      <tr>
+        <td>Republic of the Philippines</td>
+      </tr>
+      <tr>
+        <td>CARAGA Region XIII</td>
+      </tr>
+      <tr>
+        <td>Provice of Surigao del Norte</td>
+      </tr>
+    </table>
+    <div style="text-align: center; padding-top:5px;">
+      <td><b style="font-size:13px;">LOCAL GOVERNMENT UNIT OF TAGANA-AN</b></td>
+    </div>
+    <table>
+      <tr>
+        <td style="text-align:center;font-size:15px;padding-top:8px;"><b><u>{{programs.description|upper}}</u></b></td>
+      </tr>
+      <tr>
+        <td style="text-align:center;">{{now|date:"F d, Y"}}</td>
+      </tr>
+    </table>
+  </div>
+  <div class="font8" style="padding-top:10px;">
+    <table style="border-bottom: 0.5px solid #000;padding-top:3px;padding-left:3px;">
+      <tr style="background-color:#636e72;color:white;">
+        <th style="text-align:center;white-space:nowrap;width:5%;"># </th>
+        <th colspan="10" style="text-align:left;">Name </th>
+        <th style="text-align:left;white-space:nowrap;width:10%;">Barangay </th>
+      </tr>
+      {% for p in profile %}
+      <tr>
+        <td>{{forloop.counter}} </td>
+        <td colspan="10">{{p.profile.name}} </td>
+        <td>{{p.profile.barangay}} </td>
+      </tr>
+      {% empty %}
+      <td colspan="12" style="text-align:center;">No Data Found</td>
+      {% endfor %}
+    </table>
+
+  </div>
+</div>
+</body>
+</html>

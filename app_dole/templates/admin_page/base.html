@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>LGU TAGANA-AN</title>
+  <!-- HTML5 Shim and Respond.js IE11 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 11]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js'%}"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="description" content="" />
+  <meta name="keywords" content="">
+  <meta name="author" content="Codedthemes" />
+  <link rel="icon" href="{% static 'logo/logo-tagana-an.jpeg'%}" type="image/x-icon">
+
+  <!-- Favicon icon -->
+  <link rel="stylesheet" href="{% static 'premium/assets/sweetalert2/sweetalert2.min.css'%}">
+  <!-- vendor css -->
+  <link rel="stylesheet" href="{% static 'premium/assets/css/style.css'%}">
+
+  {% block 'link' %}
+
+  {% endblock %}
+
+</head>
+<body class="">
+  <!-- [ Pre-loader ] start -->
+  <div class="loader-bg">
+    <div class="loader-track">
+      <div class="loader-fill"></div>
+    </div>
+  </div>
+  <!-- [ Pre-loader ] End -->
+  <!-- [ navigation menu ] start -->
+  <nav class="pcoded-navbar menupos-fixed menu-light">
+    <div class="navbar-wrapper  ">
+      <div class="navbar-content scroll-div " >
+        <ul class="nav pcoded-inner-navbar ">
+          <li class="nav-item pcoded-menu-caption">
+            <label>Navigation</label>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'dashboard' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-home"></i></span><span class="pcoded-mtext">Dashboard</span></a>
+          </li>
+          <li class="nav-item {% block 'profile_active' %}{% endblock %}">
+            <a href="{% url 'profile' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-users"></i></span><span class="pcoded-mtext">Profile</span></a>
+          </li>
+          <li class="nav-item {% block 'programs_active' %}{% endblock %}">
+            <a href="{% url 'programs' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-folder"></i></span><span class="pcoded-mtext">Programs</span></a>
+          </li>
+          <li class="nav-item pcoded-menu-caption">
+            <label>Others</label>
+          </li>
+          <!-- <li class="nav-item">
+            <a href="{% url 'reports' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Reports</span></a>
+          </li> -->
+          <li class="nav-item">
+            <a href="{% url 'security' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Change Password</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'logout' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out text-danger"></i></span><span class="pcoded-mtext">Sign Out</span></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+  <header class="navbar pcoded-header navbar-expand-lg navbar-light headerpos-fixed header-red">
+    <div class="m-header">
+      <a class="mobile-menu" id="mobile-collapse" href="#!"><span></span></a>
+      <a href="{% url 'dashboard' %}" class="b-brand text-center">
+        GOVPH | <b>&nbsp;&nbsp;LGU TAGANA-AN</b>
+      </a>
+      <a href="#!" class="mob-toggler">
+        <i class="feather icon-more-vertical"></i>
+      </a>
+    </div>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ml-auto">
+        <!-- <li>
+          <div class="dropdown drp-user">
+            <a href="#!" class="dropdown-toggle" data-toggle="dropdown">
+              <img src="{% static 'user_images/user_male.png' %}" width="40px" height="40px" class="img-radius wid-40" alt="User-Profile-Image">
+            </a>
+            <div class="dropdown-menu dropdown-menu-right profile-notification">
+  						<div class="pro-head">
+  							<img src="{% static 'user_images/user_male.png' %}" class="img-radius" alt="User-Profile-Image">
+  							<span>JOHN DOE</span>
+  						</div>
+  						<ul class="pro-body">
+  							<li><a href="#" class="dropdown-item"><i class="feather icon-user"></i>My Profile</a></li>
+                <li><a href="#" class="dropdown-item"><i class="feather icon-activity"></i>Transaction Logs</a></li>
+  							<li><a href="#" class="dropdown-item"><i class="feather icon-lock"></i>Security</a></li>
+  						</ul>
+  					</div>
+          </div>
+        </li> -->
+      </ul>
+    </div>
+  </header>
+  <!-- [ Header ] end -->
+
+
+
+  <!-- [ Main Content ] start -->
+  <div class="pcoded-main-container">
+    <div class="pcoded-content">
+      <!-- [ Main Content ] start -->
+      <div class="row">
+        <div class="col-md-12">
+          <h5>{{title}}</h5>
+        </div>
+        {% block 'content' %}
+        {% endblock %}
+      </div>
+      <!-- [ Main Content ] end -->
+    </div>
+  </div>
+  {% block 'modal' %}
+  {% endblock %}
+  <!-- Warning Section Ends -->
+
+  <!-- Required Js -->
+  <script src="{% static 'premium/assets/js/vendor-all.min.js'%}"></script>
+  <script src="{% static 'premium/assets/js/plugins/bootstrap.min.js'%}"></script>
+  <script src="{% static 'premium/assets/js/pcoded.min.js'%}"></script>
+
+  <!-- Apex Chart -->
+  <script src="{% static 'premium/assets/js/plugins/apexcharts.min.js'%}"></script>
+  <script src="{% static 'premium/assets/sweetalert2/sweetalert2.min.js'%}"></script>
+  <script type="text/javascript">
+    const Toast = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000
+    });
+  </script>
+  <script type="text/javascript">
+
+    function getCookie(name) {
+      var cookieValue = null;
+      if (document.cookie && document.cookie !== '') {
+        var cookies = document.cookie.split(';');
+        for (var i = 0; i < cookies.length; i++) {
+          var cookie = jQuery.trim(cookies[i]);
+          // Does this cookie string begin with the name we want?
+          if (cookie.substring(0, name.length + 1) === (name + '=')) {
+            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+            break;
+          }
+        }
+      }
+      return cookieValue;
+    }
+    function csrfSafeMethod(method) {
+      // these HTTP methods do not require CSRF protection
+      return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    };
+  </script>
+
+  {% block 'script' %}
+  {% endblock %}
+
+  <!-- custom-chart js -->
+
+</body>
+
+</html>
