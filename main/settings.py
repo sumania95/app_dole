@@ -25,7 +25,7 @@ SECRET_KEY = 'k74azj)*8$+022kpbt*b$)lq3k75vh-kpw3ou*s3j6^fk=hpj)'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','172.16.1.200']
 
 
 MIDDLEWARE = [
@@ -65,8 +65,8 @@ WSGI_APPLICATION = 'main.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '',
-        'USER': '',
+        'NAME': '2021_dole',
+        'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
