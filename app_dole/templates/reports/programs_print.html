@@ -70,7 +70,7 @@
       {% for p in profile %}
       <tr>
         <td>{{forloop.counter}} </td>
-        <td colspan="10">{{p.profile.name}} </td>
+        <td colspan="10">{{p.profile.name|upper}} </td>
         <td>{{p.profile.barangay}} </td>
       </tr>
       {% empty %}

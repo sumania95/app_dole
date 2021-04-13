@@ -23,8 +23,12 @@ from app_dole.models import (
     Profile,
     Programs,
     Programs_Detail,
+    Sms_Bluster,
 )
-from .forms import ProgramsForm
+from .forms import (
+    ProgramsForm,
+    Sms_BlusterForm
+)
 from django.utils import timezone
 from app_dole.render import (
     Render
@@ -271,3 +275,25 @@ class Programs_Details_Print(LoginRequiredMixin,View):
         }
         pdf = Render.render('reports/programs_print.html', params)
         return pdf
+
+# SMS BLUSTER
+
+class Programs_Details_SMS_Bluster_AJAXView(LoginRequiredMixin,View):
+    template_name = 'admin_page/forms/programs_details_sms_bluster_form.html'
+    def get(self, request):
+        data = dict()
+        try:
+            program_id = self.request.GET.get('program_id')
+        except Exception as e:
+            program_id = None
+        forms = Sms_BlusterForm()
+        context = {
+            'program_id': program_id,
+            'forms': forms,
+            'is_Create': True,
+            'btn_name': "primary",
+            'btn_title': "SEND MESSAGE",
+            'title': "CREATE MESSAGE",
+        }
+        data['html_form'] = render_to_string(self.template_name,context)
+        return JsonResponse(data)

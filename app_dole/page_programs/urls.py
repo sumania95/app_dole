@@ -16,6 +16,7 @@ from .views import (
     Programs_Details_Profile_Table_AJAXView,
     Programs_Detials_Table_AJAXView,
     Programs_Details_Print,
+    Programs_Details_SMS_Bluster_AJAXView
 )
 
 urlpatterns = [
@@ -33,4 +34,6 @@ urlpatterns = [
     path('api/details/profile/added/<int:pk>', Programs_Details_Profile_Create_AJAXView.as_view(), name = 'programs_details_profile_create_api'),
     path('api/details/profile/removed/<int:pk>', Programs_Details_Profile_Remove_AJAXView.as_view(), name = 'programs_details_profile_removed_api'),
     path('print/<int:pk>', Programs_Details_Print.as_view(), name = 'programs_details_print'),
+    path('api/details/sms-bluster', Programs_Details_SMS_Bluster_AJAXView.as_view(), name = 'programs_details_sms_bluster_form_api'),
+
 ]

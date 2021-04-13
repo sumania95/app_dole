@@ -42,6 +42,11 @@
     <div class="navbar-wrapper  ">
       <div class="navbar-content scroll-div " >
         <ul class="nav pcoded-inner-navbar ">
+          <li class="nav-item text-center mt-2">
+            <img src="{% static 'user_images/user_male.png' %}" width="80px" height="80px" class="img-radius wid-80" alt="User-Profile-Image">
+            <br>
+            <label>@{{user.username}}</label>
+          </li>
           <li class="nav-item pcoded-menu-caption">
             <label>Navigation</label>
           </li>
@@ -61,7 +66,10 @@
             <a href="{% url 'reports' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Reports</span></a>
           </li> -->
           <li class="nav-item">
-            <a href="{% url 'security' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Change Password</span></a>
+            <a href="#" class="nav-link "><span class="pcoded-micon"><i class="text-success feather icon-mail"></i></span><span class="pcoded-mtext">SMS Config</span><span class="ml-2 badge badge-danger">soon</span></a>
+          </li>
+          <li class="nav-item">
+            <a href="{% url 'security' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-lock text-danger"></i></span><span class="pcoded-mtext">Change Password</span></a>
           </li>
           <li class="nav-item">
             <a href="{% url 'logout' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-log-out text-danger"></i></span><span class="pcoded-mtext">Sign Out</span></a>

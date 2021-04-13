@@ -52,6 +52,10 @@ class Home(LoginRequiredMixin,TemplateView):
 class Security_Page(LoginRequiredMixin,TemplateView):
     LOGIN_URL = 'login'
     template_name = 'admin_page/pages/security.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Change Password"
+        return context
 
 class Security_AJAXView(LoginRequiredMixin,View):
     def get(self, request):

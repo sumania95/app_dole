@@ -1,11 +1,12 @@
 {% for p in programs_details %}
 <tr>
   <td>{{forloop.counter|add:start}}</td>
-  <td>{{p.profile.name}}</td>
+  <td>{{p.profile.name|upper}}</td>
   <td>{{p.profile.barangay}}</td>
   <td>
     <form data-url="{% url 'programs_details_profile_removed_api' p.id %}" class="custom-form-removed" method="post">
       <button type="submit" class="btn btn-danger btn-sm confirm-removed rounded-circle" name="button"><i class="feather icon-trash"></i></button>
+      <!-- <button type="button" class="btn btn-success btn-sm rounded-circle" name="button"><i class="feather icon-mail"></i></button> -->
     </form>
   </td>
 </tr>

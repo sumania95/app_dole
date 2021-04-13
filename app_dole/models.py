@@ -34,7 +34,7 @@ class Profile(models.Model):
     date_of_birth           = models.DateField(default=timezone.now)
     gender                  = models.CharField(max_length=10,choices=gender)
     civil_status            = models.CharField(max_length=10,choices=civil_status)
-    contact_no              = models.CharField(max_length = 200,blank=True)
+    contact_no              = models.CharField(max_length = 11,blank=True)
     purok_street            = models.CharField(max_length = 200,blank=True)
     barangay                = models.ForeignKey(Barangay, on_delete = models.CASCADE)
     date_updated            = models.DateTimeField(auto_now = True)
@@ -63,5 +63,12 @@ class Programs(models.Model):
 class Programs_Detail(models.Model):
     profile                 = models.ForeignKey(Profile, on_delete = models.CASCADE)
     programs                = models.ForeignKey(Programs, on_delete = models.CASCADE)
+    date_updated            = models.DateTimeField(auto_now = True)
+    date_created            = models.DateTimeField(auto_now_add = True)
+
+class Sms_Bluster(models.Model):
+    profile                 = models.ForeignKey(Profile, on_delete = models.CASCADE)
+    message                 = models.CharField(max_length = 1000)
+    user                    = models.ForeignKey(User, on_delete = models.CASCADE)
     date_updated            = models.DateTimeField(auto_now = True)
     date_created            = models.DateTimeField(auto_now_add = True)
