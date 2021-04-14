@@ -72,3 +72,10 @@ class Sms_Bluster(models.Model):
     user                    = models.ForeignKey(User, on_delete = models.CASCADE)
     date_updated            = models.DateTimeField(auto_now = True)
     date_created            = models.DateTimeField(auto_now_add = True)
+
+class Sms_Config(models.Model):
+    ip_address              = models.CharField(max_length = 200)
+    username                = models.CharField(max_length = 200)
+    password                = models.CharField(max_length = 200)
+    date_updated            = models.DateTimeField(auto_now = True)
+    date_created            = models.DateTimeField(auto_now_add = True)

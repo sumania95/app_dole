@@ -24,6 +24,7 @@ from app_dole.models import (
     Programs,
     Programs_Detail,
     Sms_Bluster,
+    Sms_Config,
 )
 from .forms import (
     ProgramsForm,
@@ -33,6 +34,9 @@ from django.utils import timezone
 from app_dole.render import (
     Render
 )
+
+import huaweisms.api.user
+import huaweisms.api.sms
 
 success = 'success'
 info = 'info'
@@ -291,9 +295,39 @@ class Programs_Details_SMS_Bluster_AJAXView(LoginRequiredMixin,View):
             'program_id': program_id,
             'forms': forms,
             'is_Create': True,
-            'btn_name': "primary",
+            'btn_name': "success",
             'btn_title': "SEND MESSAGE",
             'title': "CREATE MESSAGE",
         }
         data['html_form'] = render_to_string(self.template_name,context)
+        return JsonResponse(data)
+
+class Programs_Details_SMS_Bluster_Save_AJAXView(LoginRequiredMixin,View):
+    def post(self, request,pk):
+        data = dict()
+        program = Programs_Detail.objects.filter(programs_id=pk).count()
+        program_list = Programs_Detail.objects.filter(programs_id=pk).all()
+        # Sms_Config
+        sms_config = Sms_Config.objects.first()
+        try:
+            ctx = huaweisms.api.user.quick_login(sms_config.username, sms_config.password, modem_host=sms_config.ip_address)
+            if request.method == 'POST':
+                for p in program_list:
+                    form = Sms_BlusterForm(request.POST,request.FILES)
+                    if form.is_valid():
+                        huaweisms.api.sms.send_sms(
+                            ctx,
+                            p.profile.contact_no,
+                            form.instance.message
+                        )
+                        form.instance.profile = p.profile
+                        form.instance.user = self.request.user
+                        form.save()
+                data['valid'] = True
+                data['message_type'] = success
+                data['message_title'] = 'Successfully send.'
+        except Exception as e:
+            data['valid'] = False
+            data['message_type'] = error
+            data['message_title'] = 'No Modeem Connected!.'
         return JsonResponse(data)

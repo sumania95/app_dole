@@ -3,8 +3,6 @@
 
 {% block 'content' %}
 <div class="col-md-12">
-  <h5>SMS Configuration</h5>
-  <hr>
   <div class="card mb-3" id="form">
 
   </div>
@@ -18,11 +16,12 @@
 <script>
   function form_load(){
     $.ajax({
-      url: '{% url 'api_security' %}',
+      url: '{% url 'sms_config_page_api' %}',
       type: 'get',
       dataType: 'json',
       success:function(data){
         $('#form').html(data.html_form);
+        console.log('success');
       },
     });
 
