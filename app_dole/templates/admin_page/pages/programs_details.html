@@ -7,24 +7,10 @@
   <div class="card p-0 mb-2">
     <div class="card-header m-0 p-2">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
           <div class="form-group">
             <label for="">Program Description</label>
             <label class="form-control form-control-sm text-primary">{{object.description}}</label>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group">
-            <label for="">Program Sponsored</label>
-            <label class="form-control form-control-sm text-primary">{{object.sponsored_by}}</label>
-          </div>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <div class="form-group">
-            <label for="">Date Ranged</label>
-            <label class="form-control form-control-sm text-primary">{{object.date_from}} - {{object.date_to}}</label>
           </div>
         </div>
       </div>
@@ -32,7 +18,17 @@
   </div>
   <div class="card p-0">
     <div class="card-header btn-page m-0">
-      <form action="{% url 'programs_details_print' object.id %}" target="_blank" method="get">
+      <div class="row">
+        <div class="col-md-12">
+          <label>Other Tools</label>
+          <hr class="m-2">
+        </div>
+        <div class="col-md-12">
+          <button data-url="{% url 'programs_details_sms_bluster_form_api' %}" type="button" class="btn btn-success btn-sm form-show" name="button"><i class="feather icon-mail mr-2"></i>SMS Bluster</button>
+          <a class="btn btn-secondary btn-sm" href="{% url 'programs_details_export_excel_api' object.id %}"><i class="feather icon-download mr-2"></i>Export To Excel</a>
+          <hr class="m-2">
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <label>Filter</label>
@@ -54,13 +50,9 @@
           <hr class="m-2">
         </div>
         <div class="col-md-12">
-          <!-- <a href="#" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>Add to list</a> -->
             <button data-url="{% url 'programs_details_form_api' %}" type="button" class="btn btn-primary btn-sm form-show" name="button"><i class="feather icon-plus-circle mr-1"></i>Add to list</button>
-            <button data-url="{% url 'programs_details_sms_bluster_form_api' %}" type="button" class="btn btn-success btn-sm form-show" name="button"><i class="feather icon-mail mr-2"></i>SMS Bulk</button>
-            <button type="submit" class="btn btn-secondary btn-sm" name="button"><i class="feather icon-printer mr-2"></i>Print List</button>
         </div>
       </div>
-      </form>
     </div>
     <div class="card-body">
       <div class="col-md-12 text-center border-top">

@@ -311,23 +311,41 @@ class Programs_Details_SMS_Bluster_Save_AJAXView(LoginRequiredMixin,View):
         sms_config = Sms_Config.objects.first()
         try:
             ctx = huaweisms.api.user.quick_login(sms_config.username, sms_config.password, modem_host=sms_config.ip_address)
+            print(ctx)
             if request.method == 'POST':
-                for p in program_list:
-                    form = Sms_BlusterForm(request.POST,request.FILES)
-                    if form.is_valid():
-                        huaweisms.api.sms.send_sms(
-                            ctx,
-                            p.profile.contact_no,
-                            form.instance.message
-                        )
+                form = Sms_BlusterForm(request.POST,request.FILES)
+                mobile_no = []
+                message = ""
+                if form.is_valid():
+                    for p in program_list:
+                        mobile_no.append(p.profile.contact_no)
                         form.instance.profile = p.profile
                         form.instance.user = self.request.user
+                        message = form.instance.message
                         form.save()
+                huaweisms.api.sms.send_sms(
+                    ctx,
+                    mobile_no,
+                    message
+                )
                 data['valid'] = True
                 data['message_type'] = success
                 data['message_title'] = 'Successfully send.'
         except Exception as e:
             data['valid'] = False
             data['message_type'] = error
-            data['message_title'] = 'No Modeem Connected!.'
+            data['message_title'] = 'Message Not Sent!'
         return JsonResponse(data)
+import csv
+from django.http import HttpResponse
+class Programs_Details_Export_Excel_AJAXView(LoginRequiredMixin,View):
+    def get(self, request,pk):
+        programs = Programs.objects.get(id=pk)
+        profile = Programs_Detail.objects.filter(programs_id = programs.id).values_list('profile__firstname', 'profile__middlename', 'profile__surname','profile__ext_name','profile__date_of_birth', 'profile__gender' , 'profile__civil_status' ,'profile__purok_street','profile__barangay__name','profile__contact_no').order_by('profile__surname','profile__firstname')
+        response = HttpResponse(content_type='text/csv')
+        response['Content-Disposition'] = 'attachment; filename="programs.csv"'
+        writer = csv.writer(response)
+        writer.writerow(['Firstname', 'Middlename', 'Surname','Ext Name' ,'Birthdate','Gender', 'Status','Purok Street','Barangay' ,'Mobile'])
+        for user in profile:
+            writer.writerow(user)
+        return response
