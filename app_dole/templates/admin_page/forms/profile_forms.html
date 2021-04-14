@@ -43,7 +43,9 @@
           if (data.url){
             window.location.href = data.url;
           }
-          form_load();
+          if (data.valid){
+            form_load();
+          }
         },
         error:function(error){
           Toast.fire({

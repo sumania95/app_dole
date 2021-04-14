@@ -64,9 +64,16 @@ class Profile_Create_AJAXView(LoginRequiredMixin,View):
         if request.method == 'POST':
             form = ProfileForm(request.POST,request.FILES)
             if form.is_valid():
-                form.save()
-                data['message_type'] = success
-                data['message_title'] = 'Successfully saved.'
+                user_exist = Profile.objects.filter(firstname__iexact = form.instance.firstname.lower(),surname__iexact = form.instance.surname.lower(),ext_name__iexact = form.instance.ext_name.lower()).exists()
+                if user_exist:
+                    data['valid'] = False
+                    data['message_type'] = error
+                    data['message_title'] = 'Duplicated Account.'
+                else:
+                    form.save()
+                    data['valid'] = True
+                    data['message_type'] = success
+                    data['message_title'] = 'Successfully saved.'
         return JsonResponse(data)
 
 class Profile_Update(LoginRequiredMixin,TemplateView):
