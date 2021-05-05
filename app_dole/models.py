@@ -24,6 +24,7 @@ civil_status = (
     ('3', 'Widowed',),
     ('4', 'Separated',),
     ('5', 'Annulled',),
+    ('10', 'None',),
 )
 
 class Profile(models.Model):
@@ -31,7 +32,7 @@ class Profile(models.Model):
     firstname               = models.CharField(max_length = 200)
     middlename              = models.CharField(max_length = 200,blank=True)
     ext_name                = models.CharField(max_length = 200,blank=True)
-    date_of_birth           = models.DateField(default=timezone.now)
+    date_of_birth           = models.DateField(default=timezone.now,blank=True,null=True)
     gender                  = models.CharField(max_length=10,choices=gender)
     civil_status            = models.CharField(max_length=10,choices=civil_status)
     contact_no              = models.CharField(max_length = 11,blank=True)
@@ -47,7 +48,10 @@ class Profile(models.Model):
     @property
     def age(self):
         now = timezone.now()
-        return int((now.date() - self.date_of_birth).days / 365.25)
+        if self.date_of_birth:
+            return int((now.date() - self.date_of_birth).days / 365.25)
+        else:
+            return 0
 
     class Meta:
         ordering = ['surname','firstname','middlename']
