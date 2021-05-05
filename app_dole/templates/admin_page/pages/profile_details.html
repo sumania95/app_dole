@@ -1,11 +1,25 @@
 {% extends 'admin_page/base.html' %}
 {% load static %}
-
+{% block 'profile_active' %}active{% endblock %}
 {% block 'content' %}
 
 <div class="col-md-12">
+  <div class="card p-0 mb-2">
+    <div class="card-header m-0 p-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="">Name</label>
+            <label class="form-control form-control-sm text-primary">{{object.name}}</label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="card p-0">
     <div class="card-header btn-page m-0 pb-2">
+      <h5 class="card-title">PROGRAMS ATTENDED</h5>
+      <hr class="m-2">
       <div class="row">
         <div class="col-md-12">
           <label>Filter</label>
@@ -16,12 +30,6 @@
               </td>
             </tr>
           </table>
-          <hr class="m-2">
-        </div>
-        <div class="col-md-12">
-          <a href="{% url 'programs_create' %}" type="button" class="btn btn-primary btn-sm" name="button"><i class="feather icon-plus-circle mr-1"></i>New</a>
-          <!-- <button type="button" class="btn btn-secondary btn-sm" name="button"><i class="feather icon-download mr-2"></i>Export</button> -->
-          <!-- <button type="button" class="btn btn-secondary btn-sm" name="button"><i class="feather icon-printer mr-2"></i>Print</button> -->
         </div>
       </div>
     </div>
@@ -34,10 +42,9 @@
           <thead>
             <tr>
               <th width="1%">#</th>
-              <th>Description</th>
-              <th>Sponsored by</th>
-              <th width="10%">Date</th>
-              <th width="10%">Action</th>
+              <th>PROGRAMS</th>
+              <th>SPONSORED BY</th>
+              <th width="10%">DATE</th>
             </tr>
           </thead>
           <tbody id="data_table">
@@ -53,11 +60,25 @@
     </div>
   </div>
 </div>
+
+{% block 'modal' %}
+<div class="modal fade" id="modal-show" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content"></div>
+  </div>
+</div>
+{% endblock %}
 {% endblock %}
 
 
 {% block 'script' %}
 <script>
+  $(document).on('click', '.confirm-added', function(){
+    return confirm('Are you sure you want to add this?');
+  });
+  $(document).on('click', '.confirm-removed', function(){
+    return confirm('Are you sure you want to remove this?');
+  });
   var start = 0;
   var end = 10;
   var counts;
@@ -75,10 +96,11 @@
   }
   function load_data(start,end){
     var search = $("#search").val();
+    var barangay = $("#barangay").val();
     $.ajax({
-      url: '{% url 'programs_table_api' %}',
+      url: '{% url 'profile_programs_details_table_api' object.id %}',
       type: 'get',
-      data: {start:start,end:end,search:search},
+      data: {start:start,end:end,search:search,barangay:barangay},
       dataType: 'json',
       success:function(data){
         counts = data.counter;
@@ -102,7 +124,14 @@
     start = 0;
     end = 10;
     load_data(start,end);
+    console.log('{{object.id}}')
+  });
+  $('#barangay').change(function() {
+    start = 0;
+    end = 10;
+    load_data(start,end);
   });
   load_data(start,end);
 </script>
+
 {% endblock %}

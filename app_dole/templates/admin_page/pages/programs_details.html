@@ -17,7 +17,7 @@
     </div>
   </div>
   <div class="card p-0">
-    <div class="card-header btn-page m-0">
+    <div class="card-header btn-page m-0 pb-2">
       <div class="row">
         <div class="col-md-12">
           <label>Other Tools</label>
@@ -25,7 +25,7 @@
         </div>
         <div class="col-md-12">
           <button data-url="{% url 'programs_details_sms_bluster_form_api' %}" type="button" class="btn btn-success btn-sm form-show" name="button"><i class="feather icon-mail mr-2"></i>SMS Bluster</button>
-          <a class="btn btn-secondary btn-sm" href="{% url 'programs_details_export_excel_api' object.id %}"><i class="feather icon-download mr-2"></i>Export To Excel</a>
+          <a class="btn btn-secondary btn-sm confirm-export" href="{% url 'programs_details_export_excel_api' object.id %}"><i class="feather icon-download mr-2"></i>Export To Excel</a>
           <hr class="m-2">
         </div>
       </div>
@@ -117,6 +117,10 @@
   });
   $(document).on('click', '.confirm-removed', function(){
     return confirm('Are you sure you want to remove this?');
+  });
+
+  $(document).on('click', '.confirm-export', function(){
+    return confirm('Are you sure you want to export this?');
   });
   var start = 0;
   var end = 10;

@@ -19,7 +19,10 @@ from django.template.loader import render_to_string
 from django.template import RequestContext
 from django.contrib.auth.mixins import LoginRequiredMixin
 from .forms import ProfileForm
-from app_dole.models import Profile
+from app_dole.models import (
+    Profile,
+    Programs_Detail
+)
 from app_dole.decorators import (
     Settings_Decorators,
 )
@@ -139,4 +142,36 @@ class Profile_Table_AJAXView(LoginRequiredMixin,View):
             data['counter'] = self.queryset.filter(Q(firstname__icontains = search)|Q(surname__icontains = search)).count()
             profile = self.queryset.filter(Q(firstname__icontains = search)|Q(surname__icontains = search)).order_by('surname','firstname')[int(start):int(end)]
             data['data'] = render_to_string(self.template_name,{'profile':profile,'start':start})
+        return JsonResponse(data)
+
+
+class Profile_Details_Page(DetailView):
+    model = Profile
+    template_name = 'admin_page/pages/profile_details.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = "Details Overview"
+        return context
+
+
+class Profile_Programs_Details_Table_AJAXView(LoginRequiredMixin,View):
+    queryset = Programs_Detail.objects.all()
+    template_name = 'admin_page/tables/profile_programs_details_table.html'
+    def get(self, request,pk):
+        data = dict()
+        try:
+            search = self.request.GET.get('search')
+            start = self.request.GET.get('start')
+            end = self.request.GET.get('end')
+
+        except KeyError:
+            search = None
+            start = None
+            end = None
+        if search or start or end:
+            data['form_is_valid'] = True
+            data['counter'] = self.queryset.filter(Q(programs__description__icontains = search)|Q(programs__sponsored_by__icontains = search),profile_id=pk).count()
+            programs = self.queryset.filter(Q(programs__description__icontains = search)|Q(programs__sponsored_by__icontains = search),profile_id=pk).order_by('-programs__date_from')[int(start):int(end)]
+            data['data'] = render_to_string(self.template_name,{'programs':programs,'start':start})
         return JsonResponse(data)

@@ -9,6 +9,8 @@ from .views import (
     Profile_Update_AJAXView,
     Profile_Update_Save_AJAXView,
     Profile_Table_AJAXView,
+    Profile_Details_Page,
+    Profile_Programs_Details_Table_AJAXView
 )
 
 urlpatterns = [
@@ -19,4 +21,8 @@ urlpatterns = [
     path('api/update', Profile_Update_AJAXView.as_view(), name = 'profile_update_api'),
     path('api/update/save/<int:pk>', Profile_Update_Save_AJAXView.as_view(), name = 'profile_update_save_api'),
     path('api/table', Profile_Table_AJAXView.as_view(), name = 'profile_table_api'),
+    path('details/<int:pk>', Profile_Details_Page.as_view(), name = 'profile_details'),
+    path('api/details/table/<int:pk>', Profile_Programs_Details_Table_AJAXView.as_view(), name = 'profile_programs_details_table_api'),
+
+
 ]

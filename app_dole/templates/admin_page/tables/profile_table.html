@@ -4,9 +4,11 @@
   <td><b>{{p.surname|upper}}, {{p.firstname|upper}}</b></td>
   <td>{{p.barangay.name}}</td>
   <td>{{p.contact_no}}</td>
-  <td>{{p.age}}</td>
+  <td>{% if p.date_of_birth %}{{p.age}}{% else %}<span class="badge badge-secondary">N/A</span>{% endif %}</td>
   <td>
     <a href="{% url 'profile_update' p.id %}" type="button" class="btn btn-warning btn-sm rounded-circle" name="button"><i class="feather icon-edit"></i></a>
+    <a href="{% url 'profile_details' p.id %}" type="button" class="btn btn-info btn-sm rounded-circle" name="button"><i class="feather icon-eye"></i></a>
+    <!-- <button href="#" type="button" class="btn btn-success btn-sm rounded-circle" name="button" disabled><i class="feather icon-mail"></i></button> -->
   </td>
 </tr>
 {% empty %}

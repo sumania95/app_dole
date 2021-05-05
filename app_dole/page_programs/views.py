@@ -144,7 +144,7 @@ class Programs_Table_AJAXView(LoginRequiredMixin,View):
         if search or start or end:
             data['form_is_valid'] = True
             data['counter'] = self.queryset.filter(Q(description__icontains = search)).count()
-            programs = self.queryset.filter(Q(description__icontains = search)).order_by('date_created')[int(start):int(end)]
+            programs = self.queryset.filter(Q(description__icontains = search)).order_by('-date_from')[int(start):int(end)]
             data['data'] = render_to_string(self.template_name,{'programs':programs,'start':start})
         return JsonResponse(data)
 
@@ -225,7 +225,7 @@ class Programs_Details_Profile_Table_AJAXView(LoginRequiredMixin,View):
             data['data'] = render_to_string(self.template_name,{'profile':profile,'start':start,'program_id':program_id})
         return JsonResponse(data)
 
-class Programs_Detials_Table_AJAXView(LoginRequiredMixin,View):
+class Programs_Details_Table_AJAXView(LoginRequiredMixin,View):
     queryset = Programs_Detail.objects.all()
     template_name = 'admin_page/tables/programs_details_table.html'
     def get(self, request,pk):
