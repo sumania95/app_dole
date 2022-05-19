@@ -85,7 +85,7 @@
         <td colspan="6">{{p.profile.name|upper}}</td>
         <td colspan="3">
           {% for d in p.program_detail %}
-             {{d.programs.get_category_display}} - {{d.programs.date_from|date:"F d, Y"|upper}}<br>
+             {{d.programs.description}} - {{d.programs.date_from|date:"F d, Y"|upper}}<br>
           {% endfor %}
         </td>
         <td colspan="2">{{p.profile.barangay|upper}} </td>
