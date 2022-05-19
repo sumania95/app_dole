@@ -14,6 +14,14 @@
           </div>
         </div>
       </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="form-group">
+            <label for="">Category</label>
+            <label class="form-control form-control-sm text-primary">{{object.get_category_display}}</label>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   <div class="card p-0">
@@ -85,7 +93,7 @@
 
 {% block 'modal' %}
 <div class="modal fade" id="modal-show" data-keyboard="false" data-backdrop="static">
-  <div class="modal-dialog modal-dialog-centered">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
     <div class="modal-content"></div>
   </div>
 </div>
@@ -112,12 +120,6 @@
   });
 </script>
 <script>
-  $(document).on('click', '.confirm-added', function(){
-    return confirm('Are you sure you want to add this?');
-  });
-  $(document).on('click', '.confirm-removed', function(){
-    return confirm('Are you sure you want to remove this?');
-  });
 
   $(document).on('click', '.confirm-export', function(){
     return confirm('Are you sure you want to export this?');

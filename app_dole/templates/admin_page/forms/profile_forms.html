@@ -6,7 +6,7 @@
 <div class="card-body">
   <form method="POST" enctype="multipart/form-data" data-url="{% if is_Create %}{% url 'profile_create_api' %}{% else %}{% url 'profile_update_save_api' profile.id %}{% endif %}" class="custom-form">
     {{form|crispy}}
-    <button type="submit" class="btn btn-{{btn_name}}">{{btn_title}}</button>
+    <button type="submit" class="btn btn-{{btn_name}}" id="{{btn_submit}}">{{btn_title}}</button>
   </form>
 </div>
 {% block 'script' %}
@@ -21,41 +21,58 @@
 <script>
   $(document).ready(function () {
     var csrftoken = getCookie('csrftoken');
+    console.log(csrftoken);
 
-    $(".custom-form").submit(function (event) {
-      event.preventDefault();
-      var form = $(this);
-      $.ajax({
-        url: form.attr('data-url'),
-        data: form.serialize(),
-        type: form.attr('method'),
-        dataType: 'json',
-        beforeSend: function(xhr, settings) {
-          if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-            xhr.setRequestHeader("X-CSRFToken", csrftoken);
-          }
-        },
-        success: function(data){
-          Toast.fire({
-            type: data.message_type,
-            title: data.message_title
-          });
-          if (data.url){
-            window.location.href = data.url;
-          }
-          if (data.valid){
-            form_load();
-          }
-        },
-        error:function(error){
-          Toast.fire({
-            type: 'error',
-            title: 'ERROR Connection Lost.'
-          });
-        },
+    $(".custom-form").on("submit", function(event) {
+        event.preventDefault();
+        Swal.fire({
+          text: "Are you sure do you want to {% if is_Create %}save{% else %}update{% endif %} this record?",
+          type: 'info',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes'
+        }).then((result) => {
 
-      })
-      return false;
+          if (result.value === true){
+            var $this 		      = $('#button-submit'); //submit button selector using ID
+            var $caption        = $this.html();// We store the html content of the submit button
+            var form 			      = $('.custom-form'); //defined the #form ID
+            var formData        = form.serializeArray() //serialize the form into array
+            // formData.push({name: 'token', value: "{{token}}"});
+            var route 			    = $(form).attr('data-url'); //get the route using attribute action
+            $.ajax({
+                url: route,
+                data: formData,
+                type: form.attr('method'),
+                beforeSend: function(xhr, settings) {
+                  if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                  }
+                  $this.attr('disabled', true).html("Processing...");
+                },
+                success: function (response) {
+                  Toast.fire({
+                    type: response.message_type,
+                    title: response.message_title
+                  });
+                  var timer = setTimeout(function() {
+                    if (response.valid){
+                      if (response.url){window.location.href = response.url;}
+                      form_load();
+                    }
+                  }, 1500);
+                },
+                error: function (XMLHttpRequest, textStatus, errorThrown) {
+                  $this.attr('disabled', false).html($caption);
+                  console.log(errorThrown);
+                  console.log(XMLHttpRequest);
+                  console.log(textStatus);
+                }
+            });
+          }
+        });
+        // end
     });
 
   });

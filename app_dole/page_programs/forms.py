@@ -11,6 +11,7 @@ class ProgramsForm(forms.ModelForm):
         fields = [
             'description',
             'sponsored_by',
+            'category',
             'date_from',
             'date_to',
         ]

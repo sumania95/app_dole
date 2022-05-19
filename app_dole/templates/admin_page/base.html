@@ -24,6 +24,11 @@
   <!-- vendor css -->
   <link rel="stylesheet" href="{% static 'premium/assets/css/style.css'%}">
 
+  <style>
+      .swal2-container {
+      z-index: 20000 !important;
+    }
+  </style>
   {% block 'link' %}
 
   {% endblock %}
@@ -58,12 +63,12 @@
           <li class="nav-item {% block 'programs_active' %}{% endblock %}">
             <a href="{% url 'programs' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-folder"></i></span><span class="pcoded-mtext">Programs</span></a>
           </li>
+          <li class="nav-item">
+            <a href="{% url 'reports' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Reports</span></a>
+          </li>
           <li class="nav-item pcoded-menu-caption">
             <label>Others</label>
           </li>
-          <!-- <li class="nav-item">
-            <a href="{% url 'reports' %}" class="nav-link "><span class="pcoded-micon"><i class="feather icon-printer"></i></span><span class="pcoded-mtext">Reports</span></a>
-          </li> -->
           <li class="nav-item">
             <a href="{% url 'sms_config_page' %}" class="nav-link "><span class="pcoded-micon"><i class="text-success feather icon-mail"></i></span><span class="pcoded-mtext">SMS Config</span></a>
           </li>

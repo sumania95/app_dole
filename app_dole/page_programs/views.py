@@ -70,6 +70,8 @@ class Programs_Create_AJAXView(LoginRequiredMixin,View):
             'is_Create': True,
             'btn_name': "primary",
             'btn_title': "Submit",
+            'btn_submit': "button-submit",
+
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -79,6 +81,7 @@ class Programs_Create_AJAXView(LoginRequiredMixin,View):
             form = ProgramsForm(request.POST,request.FILES)
             if form.is_valid():
                 form.save()
+                data['valid'] = True
                 data['message_type'] = success
                 data['message_title'] = 'Successfully saved.'
         return JsonResponse(data)
@@ -112,6 +115,8 @@ class Programs_Update_AJAXView(LoginRequiredMixin,View):
             'is_Create': False,
             'btn_name': "warning",
             'btn_title': "Update",
+            'btn_submit': "button-submit",
+
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -124,6 +129,7 @@ class Programs_Update_Save_AJAXView(LoginRequiredMixin,View):
             form = ProgramsForm(request.POST,request.FILES,instance=programs)
             if form.is_valid():
                 form.save()
+                data['valid'] = True
                 data['message_type'] = success
                 data['message_title'] = 'Successfully updated.'
         return JsonResponse(data)
@@ -137,15 +143,25 @@ class Programs_Table_AJAXView(LoginRequiredMixin,View):
             search = self.request.GET.get('search')
             start = self.request.GET.get('start')
             end = self.request.GET.get('end')
+            category = self.request.GET.get('category')
         except KeyError:
             search = None
             start = None
             end = None
-        if search or start or end:
-            data['form_is_valid'] = True
-            data['counter'] = self.queryset.filter(Q(description__icontains = search)).count()
-            programs = self.queryset.filter(Q(description__icontains = search)).order_by('-date_from')[int(start):int(end)]
-            data['data'] = render_to_string(self.template_name,{'programs':programs,'start':start})
+            category = None
+        print(category)
+        if search or start or end or category:
+            if category == "0":
+                print('0000')
+                data['form_is_valid'] = True
+                data['counter'] = self.queryset.filter(Q(description__icontains = search)).count()
+                programs = self.queryset.filter(Q(description__icontains = search)).order_by('-date_from')[int(start):int(end)]
+                data['data'] = render_to_string(self.template_name,{'programs':programs,'start':start})
+            else:
+                data['form_is_valid'] = True
+                data['counter'] = self.queryset.filter(Q(description__icontains = search),category = category).count()
+                programs = self.queryset.filter(Q(description__icontains = search),category = category).order_by('-date_from')[int(start):int(end)]
+                data['data'] = render_to_string(self.template_name,{'programs':programs,'start':start})
         return JsonResponse(data)
 
 class Programs_Details_Page(DetailView):
@@ -221,8 +237,18 @@ class Programs_Details_Profile_Table_AJAXView(LoginRequiredMixin,View):
         if search or start or end:
             data['form_is_valid'] = True
             data['counter'] = self.queryset.exclude(id__in = Programs_Detail.objects.values('profile_id').filter(programs_id = program_id)).filter(Q(surname__icontains = search)|Q(firstname__icontains = search)).count()
-            profile = self.queryset.exclude(id__in = Programs_Detail.objects.values('profile_id').filter(programs_id = program_id)).filter(Q(surname__icontains = search)|Q(firstname__icontains = search)).order_by('surname','firstname','middlename')[int(start):int(end)]
-            data['data'] = render_to_string(self.template_name,{'profile':profile,'start':start,'program_id':program_id})
+            record = self.queryset.exclude(id__in = Programs_Detail.objects.values('profile_id').filter(programs_id = program_id)).filter(Q(surname__icontains = search)|Q(firstname__icontains = search)).order_by('surname','firstname','middlename')[int(start):int(end)]
+            record_array = []
+            for p in record:
+                profile = {
+                    'profile' : Profile.objects.get(id=p.id),
+                    'program_detail' : Programs_Detail.objects.filter(profile_id = p.id).last(),
+                    'program' : Programs.objects.get(id = program_id),
+                    'program_detail_count' : Programs_Detail.objects.filter(profile_id = p.id).count(),
+                    'now' : timezone.now()
+                }
+                record_array.append(profile)
+            data['data'] = render_to_string(self.template_name,{'profile':record_array,'start':start,'program_id':program_id})
         return JsonResponse(data)
 
 class Programs_Details_Table_AJAXView(LoginRequiredMixin,View):

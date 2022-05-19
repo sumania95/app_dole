@@ -14,6 +14,14 @@
               <td>
                 <input type="search" class="form-control float-right" placeholder="Search...." name="search" id="search">
               </td>
+              <td>
+                <select class="form-control" name="category" id="category">
+                  <option value="0">ALL</option>
+                  <option value="1">TUPAD</option>
+                  <option value="2">SPES</option>
+                  <option value="3">LIVELIHOOD</option>
+                </select>
+              </td>
             </tr>
           </table>
           <hr class="m-2">
@@ -36,6 +44,7 @@
               <th width="1%">#</th>
               <th>Description</th>
               <th>Sponsored by</th>
+              <th width="10%">Category</th>
               <th width="10%">Date</th>
               <th width="10%">Action</th>
             </tr>
@@ -75,10 +84,11 @@
   }
   function load_data(start,end){
     var search = $("#search").val();
+    var category = $("#category").val();
     $.ajax({
       url: '{% url 'programs_table_api' %}',
       type: 'get',
-      data: {start:start,end:end,search:search},
+      data: {start:start,end:end,search:search,category:category},
       dataType: 'json',
       success:function(data){
         counts = data.counter;
@@ -99,6 +109,11 @@
     load_data(start,end);
   });
   $('#search').change(function() {
+    start = 0;
+    end = 10;
+    load_data(start,end);
+  });
+  $('#category').change(function() {
     start = 0;
     end = 10;
     load_data(start,end);

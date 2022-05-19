@@ -59,6 +59,7 @@ class Profile_Create_AJAXView(LoginRequiredMixin,View):
             'is_Create': True,
             'btn_name': "primary",
             'btn_title': "Submit",
+            'btn_submit': "button-submit",
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -108,6 +109,8 @@ class Profile_Update_AJAXView(LoginRequiredMixin,View):
             'is_Create': False,
             'btn_name': "warning",
             'btn_title': "Update",
+            'btn_submit': "button-submit",
+
         }
         data['html_form'] = render_to_string(self.template_name,context)
         return JsonResponse(data)
@@ -120,6 +123,7 @@ class Profile_Update_Save_AJAXView(LoginRequiredMixin,View):
             form = ProfileForm(request.POST,request.FILES,instance=profile)
             if form.is_valid():
                 form.save()
+                data['valid'] = True
                 data['message_type'] = success
                 data['message_title'] = 'Successfully updated.'
         return JsonResponse(data)
@@ -140,7 +144,7 @@ class Profile_Table_AJAXView(LoginRequiredMixin,View):
         if search or start or end:
             data['form_is_valid'] = True
             data['counter'] = self.queryset.filter(Q(firstname__icontains = search)|Q(surname__icontains = search)).count()
-            profile = self.queryset.filter(Q(firstname__icontains = search)|Q(surname__icontains = search)).order_by('surname','firstname')[int(start):int(end)]
+            profile = self.queryset.filter(Q(firstname__icontains = search)|Q(surname__icontains = search))[int(start):int(end)]
             data['data'] = render_to_string(self.template_name,{'profile':profile,'start':start})
         return JsonResponse(data)
 

@@ -27,6 +27,12 @@ civil_status = (
     ('10', 'None',),
 )
 
+category = (
+    ('1', 'TUPAD',),
+    ('2', 'SPES',),
+    ('3', 'LIVELIHOOD',),
+)
+
 class Profile(models.Model):
     surname                 = models.CharField(max_length = 200)
     firstname               = models.CharField(max_length = 200)
@@ -55,10 +61,10 @@ class Profile(models.Model):
 
     class Meta:
         ordering = ['surname','firstname','middlename']
-
 class Programs(models.Model):
     description             = models.CharField(max_length = 200)
     sponsored_by            = models.CharField(max_length = 200,blank=True)
+    category                = models.CharField(default=1,max_length=10,choices=category)
     date_from               = models.DateField(default=timezone.now)
     date_to                 = models.DateField(default=timezone.now)
     date_updated            = models.DateTimeField(auto_now = True)
@@ -69,6 +75,14 @@ class Programs_Detail(models.Model):
     programs                = models.ForeignKey(Programs, on_delete = models.CASCADE)
     date_updated            = models.DateTimeField(auto_now = True)
     date_created            = models.DateTimeField(auto_now_add = True)
+
+    @property
+    def available(self):
+        now = timezone.now()
+        if self.programs.date_from:
+            return int((now.date() - self.programs.date_from).days / 365.25)
+        else:
+            return 0
 
 class Sms_Bluster(models.Model):
     profile                 = models.ForeignKey(Profile, on_delete = models.CASCADE)

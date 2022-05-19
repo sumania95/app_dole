@@ -1,7 +1,7 @@
 {% for p in profile %}
 <tr>
   <td>{{forloop.counter|add:start}}</td>
-  <td><b>{{p.surname|upper}}, {{p.firstname|upper}}</b></td>
+  <td><b>{{p.name|upper}}</b></td>
   <td>{{p.get_gender_display}}</td>
   <td>{{p.barangay.name}}</td>
   <td>{{p.contact_no}}</td>

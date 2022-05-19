@@ -1,8 +1,13 @@
 {% for p in programs %}
 <tr>
   <td>{{forloop.counter|add:start}}</td>
-  <td>{{p.description}}</td>
+  <td>
+    {{p.description}}
+  </td>
   <td>{{p.sponsored_by}}</td>
+  <td>
+    {{p.get_category_display}}
+  </td>
   <td>{{p.date_from}} - {{p.date_to}}</td>
   <td>
     <a href="{% url 'programs_update' p.id %}" type="button" class="btn btn-warning btn-sm rounded-circle" name="button"><i class="feather icon-edit"></i></a>
